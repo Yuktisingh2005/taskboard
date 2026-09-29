@@ -2,7 +2,8 @@ import express from "express";
 import cors from "cors";
 import morgan from "morgan";
 import authRoutes from "./routes/authRoutes";
-import canvasRoutes from "./routes/canvasRoutes";
+import boardRoutes from "./routes/boardRoutes";
+import taskRoutes from "./routes/taskRoutes";
 import { errorHandler, notFoundHandler } from "./middleware/errorHandler";
 
 const app = express();
@@ -16,7 +17,8 @@ app.use(morgan("dev"));
 app.get("/api/health", (_req, res) => res.status(200).json({ status: "ok" }));
 
 app.use("/api/auth", authRoutes);
-app.use("/api/canvases", canvasRoutes);
+app.use("/api/boards", boardRoutes);
+app.use("/api/tasks", taskRoutes);
 
 app.use(notFoundHandler);
 app.use(errorHandler);

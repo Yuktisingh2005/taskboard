@@ -1,18 +1,20 @@
-import type { Config } from "tailwindcss";
+  import type { Config } from "tailwindcss";
 
-const config: Config = {
-  content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
-  theme: {
-    extend: {
-      colors: {
-        canvas: {
-          bg: "#F5F5F4",
-          accent: "#4F46E5",
+  const config: Config = {
+    content: ["./src/**/*.{js,ts,jsx,tsx,mdx}"],
+    darkMode: "class",
+    theme: {
+      extend: {
+        colors: {
+          // kept for any canvas pages that still reference these
+          canvas: {
+            bg: "#09090b",   // zinc-950
+            accent: "#6366f1",
+          },
         },
       },
     },
-  },
-  plugins: [],
-};
+    plugins: [],
+  };
 
-export default config;
+  export default config;

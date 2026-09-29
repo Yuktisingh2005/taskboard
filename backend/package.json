@@ -1,5 +1,5 @@
 {
-  "name": "mini-design-canvas-backend",
+  "name": "task-board-backend",
   "version": "1.0.0",
   "description": "Express + MongoDB API for the Mini Design Canvas assignment",
   "main": "dist/index.js",
@@ -7,7 +7,10 @@
     "dev": "nodemon src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js",
-    "lint": "tsc --noEmit"
+    "lint": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest"
+
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -17,6 +20,7 @@
     "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.5.0",
     "morgan": "^1.10.0",
+    "socket.io": "^4.8.4",
     "zod": "^3.23.8"
   },
   "devDependencies": {
@@ -26,8 +30,14 @@
     "@types/jsonwebtoken": "^9.0.6",
     "@types/morgan": "^1.9.9",
     "@types/node": "^20.14.9",
+    "@types/supertest": "^7.2.1",
+    "@vitest/coverage-v8": "^2.1.9",
+    "mongodb-memory-server": "^11.3.0",
     "nodemon": "^3.1.4",
+    "socket.io-client": "^4.8.4",
+    "supertest": "^7.3.0",
     "ts-node": "^10.9.2",
-    "typescript": "^5.5.3"
+    "typescript": "^5.5.3",
+    "vitest": "^2.1.9"
   }
 }

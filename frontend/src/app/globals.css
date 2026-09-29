@@ -1,11 +1,27 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+  @tailwind base;
+  @tailwind components;
+  @tailwind utilities;
 
-:root {
-  color-scheme: light;
-}
+  :root {
+    color-scheme: dark;
+  }
 
-body {
-  @apply bg-canvas-bg text-neutral-900;
-}
+  body {
+    @apply bg-zinc-950 text-zinc-100;
+  }
+
+  /* Custom scrollbar for the board columns */
+  .column-scroll {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.08) transparent;
+  }
+  .column-scroll::-webkit-scrollbar {
+    width: 4px;
+  }
+  .column-scroll::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .column-scroll::-webkit-scrollbar-thumb {
+    background: rgba(255,255,255,0.08);
+    border-radius: 9999px;
+  }

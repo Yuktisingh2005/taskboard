@@ -1,9 +1,7 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  webpack: (config) => {
-    config.externals = [...(config.externals || []), { canvas: "commonjs canvas" }];
-    return config;
-  },
-};
+  // frontend/next.config.mjs
+  /** @type {import('next').NextConfig} */
+  const nextConfig = {
+    output: "standalone",
+  };
 
-export default nextConfig;
+  export default nextConfig;
