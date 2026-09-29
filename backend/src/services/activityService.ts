@@ -14,7 +14,7 @@ interface LogInput {
   meta?: Record<string, unknown>;
 }
 
-// Shape sent to the frontend (and, in Phase 3, broadcast over sockets).
+
 export function serializeActivity(a: IActivity) {
   const user = a.userId as unknown as { _id?: Types.ObjectId; name?: string } | null;
   return {
@@ -29,8 +29,7 @@ export function serializeActivity(a: IActivity) {
   };
 }
 
-// Recording activity is secondary to the action itself, so a failure here is
-// logged but never turns a successful request into an error.
+
 export async function logActivity(input: LogInput) {
     try {
     const activity = await Activity.create({
@@ -66,9 +65,7 @@ interface TaskSnapshot {
   title: string;
 }
 
-// Turns one task update into readable log entries: a move (or completion),
-// an assignment, and/or an edit. Reordering inside a column is not logged,
-// since it would only add noise.
+
 export async function recordTaskUpdate(params: {
   userId: string;
   task: ITask;

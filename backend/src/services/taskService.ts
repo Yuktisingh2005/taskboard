@@ -4,8 +4,7 @@ import { POSITION_GAP, TRACKED_FIELDS, type TrackedField } from "../utils/consta
 
 const MAX_ATTEMPTS = 3;
 
-// Is the incoming value the same as what's stored? Ids and dates need
-// converting first, because comparing objects directly would always say "different".
+
 function sameValue(field: TrackedField, current: unknown, incoming: unknown): boolean {
   if (field === "assigneeId") {
     return (current ? String(current) : null) === (incoming ? String(incoming) : null);
@@ -26,13 +25,7 @@ function snapshot(task: ITask) {
   };
 }
 
-// Applies a task update safely when several people may be editing at once.
-//  1. Read the current task.
-//  2. Keep only the fields that actually change something.
-//  3. If any of those fields was changed by someone else AFTER the version the
-//     client was looking at (baseVersion), reject with 409 and the latest task.
-//  4. Otherwise write, but only if the task's version is still the one we read.
-//     If another request slipped in between, go back to step 1.
+
 export async function applyTaskUpdate(
   taskId: string,
   incoming: Record<string, unknown>,
@@ -50,7 +43,7 @@ export async function applyTaskUpdate(
       (f) => f in incoming && !sameValue(f, task.get(f), incoming[f])
     );
 
-    // Nothing to change (for example, moving a task to the column it's already in).
+    
     if (changedFields.length === 0) {
       return { task, before: snapshot(task), changedFields: [] as string[] };
     }
@@ -68,7 +61,7 @@ export async function applyTaskUpdate(
     const stamped = new Set<string>(changedFields);
     for (const f of changedFields) set[f] = incoming[f];
 
-    // Moving to another column without saying where: put it at the bottom.
+    
     if (changedFields.includes("status") && !("position" in incoming)) {
       const last = await Task.findOne({ boardId: task.boardId, status: incoming.status }).sort({
         position: -1,
@@ -80,8 +73,7 @@ export async function applyTaskUpdate(
     const newVersion = task.version + 1;
     for (const f of stamped) set[`fieldVersions.${f}`] = newVersion;
 
-    // The filter on `version` is the safety net: it only matches if nobody else
-    // has updated the task since we read it.
+    
     const updated = await Task.findOneAndUpdate(
       { _id: task._id, version: task.version },
       { $set: set, $inc: { version: 1 } },
@@ -91,7 +83,7 @@ export async function applyTaskUpdate(
     if (updated) {
       return { task: updated, before: snapshot(task), changedFields: [...stamped] };
     }
-    // Someone else wrote in the gap. Loop again with fresh data.
+   
   }
 
   throw new AppError("This task is being edited heavily right now. Please try again.", 409);

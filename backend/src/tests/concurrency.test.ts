@@ -1,11 +1,11 @@
-  // backend/src/tests/concurrency.test.ts
+  
   import { describe, it, expect, beforeEach } from "vitest";
   import mongoose from "mongoose";
   import { Task } from "../models/Task";
   import { applyTaskUpdate } from "../services/taskService";
   import { AppError } from "../utils/AppError";
 
-  // Shared board/user IDs used across tests
+  
   const boardId = new mongoose.Types.ObjectId();
   const userA = new mongoose.Types.ObjectId().toString();
   const userB = new mongoose.Types.ObjectId().toString();
@@ -30,7 +30,7 @@
       const { task: updated, changedFields } = await applyTaskUpdate(
         task.id,
         { title: "New title" },
-        0 // baseVersion matches
+        0 
       );
 
       expect(updated.title).toBe("New title");
@@ -41,19 +41,18 @@
     it("merges when User A edits title and User B edits description on the same base version", async () => {
       const task = await createTask();
 
-      // User A edits title first — succeeds, version becomes 1
+      
       await applyTaskUpdate(task.id, { title: "A changed title" }, 0);
 
-      // User B edits description with baseVersion 0 (stale).
-      // Fields don't conflict (title vs description) so it should MERGE.
+      
       const { task: merged, changedFields } = await applyTaskUpdate(
         task.id,
         { description: "B changed description" },
-        0 // B is still on version 0
+        0 
       );
 
-      expect(merged.title).toBe("A changed title"); // A's change preserved
-      expect(merged.description).toBe("B changed description"); // B's change applied
+      expect(merged.title).toBe("A changed title"); 
+      expect(merged.description).toBe("B changed description"); 
       expect(merged.version).toBe(2);
       expect(changedFields).toContain("description");
     });
@@ -61,10 +60,10 @@
     it("rejects with 409 when two users edit the SAME field", async () => {
       const task = await createTask();
 
-      // User A edits title first — succeeds
+      
       await applyTaskUpdate(task.id, { title: "A's title" }, 0);
 
-      // User B also tries to edit title with baseVersion 0 — conflict
+      
       await expect(
         applyTaskUpdate(task.id, { title: "B's title" }, 0)
       ).rejects.toMatchObject({
@@ -78,7 +77,7 @@
 
       const { changedFields } = await applyTaskUpdate(
         task.id,
-        { title: "Original title" }, // same as current
+        { title: "Original title" }, 
         0
       );
 

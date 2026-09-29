@@ -15,11 +15,10 @@ export const ACTIVITY_ACTIONS = [
 ] as const;
 export type ActivityAction = (typeof ACTIVITY_ACTIONS)[number];
 
-// Gap between task positions in a column. Leaving room between numbers means
-// a card can be dropped between two others without renumbering the whole column.
+
 export const POSITION_GAP = 1000;
 
-// Fields that get their own version stamp, used for conflict detection.
+
 export const TRACKED_FIELDS = [
   "title",
   "description",

@@ -22,7 +22,7 @@
       <div className="flex items-center gap-2">
         <SlidersHorizontal className="h-3.5 w-3.5 text-zinc-500" />
 
-        {/* Assignee filter */}
+        {}
         <select
           value={filters.assigneeId}
           onChange={(e) => onChange({ ...filters, assigneeId: e.target.value })}
@@ -36,7 +36,7 @@
           ))}
         </select>
 
-        {/* Overdue toggle */}
+        {}
         <button
           onClick={() => onChange({ ...filters, overdue: !filters.overdue })}
           className={`flex h-8 items-center gap-1.5 rounded-lg border px-2.5 text-xs transition ${
@@ -48,7 +48,7 @@
           Overdue
         </button>
 
-        {/* Clear all */}
+        {}
         <AnimatePresence>
           {isActive && (
             <motion.button

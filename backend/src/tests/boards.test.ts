@@ -1,9 +1,9 @@
- // backend/src/tests/boards.test.ts
+
   import { describe, it, expect, beforeEach } from "vitest";
   import request from "supertest";
   import app from "../app";
 
-  // Helper — registers a user and returns their auth token
+  
   async function registerAndLogin(email: string) {
     const res = await request(app).post("/api/auth/register").send({
       name: "Test User",
@@ -35,7 +35,7 @@
     it("lists only boards the user belongs to", async () => {
       const otherToken = await registerAndLogin("other@test.com");
 
-      // Create one board as the main user and one as another user
+      
       await request(app)
         .post("/api/boards")
         .set("Authorization", `Bearer ${token}`)
@@ -97,7 +97,7 @@
 
       const boardId = createRes.body._id;
 
-      // Add a task
+     
       await request(app)
         .post(`/api/boards/${boardId}/tasks`)
         .set("Authorization", `Bearer ${token}`)
@@ -109,7 +109,7 @@
 
       expect(delRes.status).toBe(204);
 
-      // Board is gone
+      
       const getRes = await request(app)
         .get(`/api/boards/${boardId}`)
         .set("Authorization", `Bearer ${token}`);

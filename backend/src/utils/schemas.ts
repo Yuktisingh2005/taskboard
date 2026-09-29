@@ -35,7 +35,7 @@ export const createTaskSchema = z.object({
 
 export const updateTaskSchema = z
   .object({
-    // The version of the task the client was looking at when it made this edit.
+    
     baseVersion: z.number().int().min(0, "baseVersion is required"),
     title: z.string().trim().min(1).max(120).optional(),
     description: z.string().max(2000).optional(),

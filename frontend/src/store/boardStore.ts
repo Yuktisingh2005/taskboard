@@ -4,7 +4,7 @@
   import type { Board, Task, Activity, BoardRole, TaskStatus } from "@/types";
 
   interface BoardState {
-    // current open board
+    
     board: Board | null;
     tasks: Task[];
     activity: Activity[];
@@ -12,20 +12,20 @@
     isLoading: boolean;
     error: string | null;
 
-    // socket / reconnect status
+    
     socketStatus: "connected" | "disconnected" | "reconnecting";
 
-    // actions
+    
     setBoard: (board: Board, tasks: Task[], role: BoardRole) => void;
     setActivity: (activity: Activity[]) => void;
     clearBoard: () => void;
 
-    // optimistic task ops (also called by socket events)
+    
     addTask: (task: Task) => void;
     updateTask: (task: Task) => void;
     removeTask: (taskId: string) => void;
 
-    // optimistic move (drag-and-drop)
+    
     moveTaskOptimistic: (taskId: string, newStatus: TaskStatus, newPosition: number) => void;
     rollbackTask: (original: Task) => void;
 

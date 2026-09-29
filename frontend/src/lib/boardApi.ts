@@ -1,7 +1,7 @@
   import { api } from "@/lib/api";
   import type { Board, BoardSummary, Task, Activity, BoardRole } from "@/types";
 
-  // ─── Boards ──────────────────────────────────────────────────────────────────
+
 
   export async function fetchBoards(): Promise<BoardSummary[]> {
     const { data } = await api.get<BoardSummary[]>("/boards");
@@ -40,7 +40,7 @@
     return data;
   }
 
-  // ─── Tasks ───────────────────────────────────────────────────────────────────
+  
 
   export interface CreateTaskPayload {
     title: string;
@@ -74,7 +74,7 @@
     await api.delete(`/tasks/${taskId}`);
   }
 
-  // ─── Activity ─────────────────────────────────────────────────────────────────
+  
 
   export async function fetchActivity(boardId: string, limit = 30): Promise<Activity[]> {
     const { data } = await api.get<Activity[]>(`/boards/${boardId}/activity?limit=${limit}`);

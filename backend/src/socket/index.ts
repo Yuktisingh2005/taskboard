@@ -15,8 +15,7 @@ export function initSocket(server: HttpServer) {
   const allowedOrigins = (process.env.CORS_ORIGIN || "http://localhost:3000").split(",");
   io = new Server(server, { cors: { origin: allowedOrigins } });
 
-  // Runs once per connection attempt. Rejecting here means the client never
-  // connects, and it receives a `connect_error` event with this message.
+  
   io.use((socket, next) => {
     const token = socket.handshake.auth?.token;
     if (!token || typeof token !== "string") {
@@ -38,8 +37,7 @@ export function initSocket(server: HttpServer) {
       const reply: Ack = typeof ack === "function" ? ack : () => {};
       try {
         if (typeof boardId !== "string") throw new AppError("Invalid board id", 400);
-        // Same membership check as the REST routes, so a socket can't listen
-        // to a board its user isn't allowed to see.
+        
         await getBoardForUser(boardId, userId);
         await socket.join(boardRoom(boardId));
         reply({ ok: true });
@@ -56,8 +54,7 @@ export function initSocket(server: HttpServer) {
   return io;
 }
 
-// The helpers below do nothing if the socket server hasn't started, so the
-// REST controllers work the same way in tests.
+
 export function emitToBoard(boardId: unknown, event: string, payload: unknown) {
   io?.to(boardRoom(String(boardId))).emit(event, payload);
 }
@@ -66,7 +63,7 @@ export function emitToUser(userId: unknown, event: string, payload: unknown) {
   io?.to(userRoom(String(userId))).emit(event, payload);
 }
 
-// After a board is deleted, remove everyone from its room.
+
 export function closeBoardRoom(boardId: unknown) {
   const room = boardRoom(String(boardId));
   io?.in(room).socketsLeave(room);

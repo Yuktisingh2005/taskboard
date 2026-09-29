@@ -12,7 +12,7 @@
     message: string;
   }
 
-  // ── Singleton store (no Zustand needed — just a module-level event bus) ──────
+  
 
   type Listener = (toasts: ToastMessage[]) => void;
   let toasts: ToastMessage[] = [];
@@ -43,7 +43,7 @@
     },
   };
 
-  // ── Component ─────────────────────────────────────────────────────────────────
+  
 
   const ICONS = {
     success: <CheckCircle className="h-4 w-4 text-emerald-400" />,

@@ -29,15 +29,15 @@
         if (!res.ok) console.error("[socket] board:join failed:", res.error);
       });
 
-      // ── task events ──────────────────────────────────────────────────────
+      
       const onTaskCreated = ({ task }: { task: Task }) => addTask(task);
       const onTaskUpdated = ({ task }: { task: Task }) => updateTask(task);
       const onTaskDeleted = ({ taskId }: { taskId: string }) => removeTask(taskId);
 
-      // ── activity events — this is what makes the panel live ─────────────
+      
       const onActivityCreated = (entry: Activity) => prependActivity(entry);
 
-      // ── board events ─────────────────────────────────────────────────────
+      
       const onBoardUpdated = (updatedBoard: Board) => {
         const { tasks, role } = useBoardStore.getState();
         if (role) setBoard(updatedBoard, tasks, role);
@@ -54,7 +54,7 @@
         toast.success(`You've been added to board "${name}"`);
       };
 
-      // ── connection lifecycle ─────────────────────────────────────────────
+      
       const onConnect = async () => {
         setSocketStatus("connected");
         toast.success("Reconnected — syncing board…");
@@ -67,7 +67,7 @@
           setBoard(b, t, r);
           setActivity(activity);
         } catch {
-          // silently ignore; stale data stays
+          
         }
       };
 

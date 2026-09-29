@@ -73,7 +73,7 @@ export const deleteBoard = asyncHandler(async (req: Request, res: Response) => {
     board.deleteOne(),
   ]);
 
-  // Tell everyone who has the board open, then close the room.
+  
   emitToBoard(board.id, "board:deleted", { boardId: board.id });
   closeBoardRoom(board.id);
 
@@ -95,8 +95,7 @@ export const addMember = asyncHandler(async (req: Request, res: Response) => {
 
   const serialized = await serializeBoard(board);
 
-  // Current members see the new person appear in the member list. The new
-  // member isn't in the room yet, so they get a direct message instead.
+  
   emitToBoard(board.id, "board:updated", serialized);
   emitToUser(user._id, "board:invited", { boardId: board.id, name: board.name });
 

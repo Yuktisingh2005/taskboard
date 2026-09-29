@@ -52,7 +52,7 @@
 
     return (
       <div className="flex w-72 shrink-0 flex-col">
-        {/* Column header */}
+        {}
         <div className="mb-3 flex items-center justify-between px-1">
           <div className="flex items-center gap-2">
             <span className={`h-2 w-2 rounded-full ${meta.dotClass}`} />
@@ -74,7 +74,7 @@
           )}
         </div>
 
-        {/* Drop zone */}
+        {}
         <div
           ref={setNodeRef}
           className={`column-scroll flex flex-1 flex-col gap-2 overflow-y-auto rounded-2xl border p-2 transition-colors ${

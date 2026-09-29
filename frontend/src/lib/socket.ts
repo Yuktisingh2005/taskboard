@@ -5,7 +5,7 @@
   export function getSocket(token: string): Socket {
     if (socket && socket.connected) return socket;
 
-    // Disconnect stale socket before creating a new one
+   
     if (socket) {
       socket.disconnect();
     }

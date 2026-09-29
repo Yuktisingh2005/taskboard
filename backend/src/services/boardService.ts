@@ -4,8 +4,7 @@ import { User } from "../models/User";
 import { AppError } from "../utils/AppError";
 import type { BoardRole } from "../utils/constants";
 
-// Loads a board and checks the user belongs to it. Every board and task route
-// goes through this, so permission rules exist in one place.
+
 export async function getBoardForUser(boardId: string, userId: string) {
   if (!mongoose.isValidObjectId(boardId)) {
     throw new AppError("Invalid board id", 400);
@@ -32,7 +31,7 @@ export function assertOwner(role: BoardRole) {
   }
 }
 
-// A task can only be assigned to someone who is a member of its board.
+
 export function assertAssigneeIsMember(board: IBoard, assigneeId: string) {
   const isMember = board.members.some((m) => m.userId.toString() === assigneeId);
   if (!isMember) {
@@ -40,8 +39,7 @@ export function assertAssigneeIsMember(board: IBoard, assigneeId: string) {
   }
 }
 
-// Adds each member's name and email, so the frontend can show people in the
-// assignee dropdown without extra requests.
+
 export async function serializeBoard(board: IBoard) {
   const users = await User.find({
     _id: { $in: board.members.map((m) => m.userId) },

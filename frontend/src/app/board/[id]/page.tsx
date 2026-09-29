@@ -69,7 +69,7 @@
 
     useBoardSocket(boardId);
 
-    // ── local state ───────────────────────────────────────────────────────────
+   
     const [isLoading, setIsLoading] = useState(true);
     const [pageError, setPageError] = useState<string | null>(null);
 
@@ -85,18 +85,18 @@
 
     const [activeTask, setActiveTask] = useState<Task | null>(null);
 
-    // ── search & filter ───────────────────────────────────────────────────────
+   
     const [search, setSearch] = useState("");
     const [filters, setFilters] = useState<FilterState>({ assigneeId: "", overdue: false });
 
     const canEdit = role === "owner" || role === "editor";
 
-    // ── sensors ───────────────────────────────────────────────────────────────
+    
     const sensors = useSensors(
       useSensor(PointerSensor, { activationConstraint: { distance: 5 } })
     );
 
-    // ── fetch ─────────────────────────────────────────────────────────────────
+   
     useEffect(() => {
       if (!token || !boardId) return;
 
@@ -119,7 +119,7 @@
       return () => clearBoard();
     }, [token, boardId]);
 
-    // ── filtered tasks ────────────────────────────────────────────────────────
+   
     const visibleTasks = useMemo(() => {
       const q = search.toLowerCase().trim();
       const now = Date.now();
@@ -138,7 +138,7 @@
     const tasksForColumn = (status: TaskStatus) =>
       visibleTasks.filter((t) => t.status === status);
 
-    // ── fractional position ───────────────────────────────────────────────────
+    
     function computePosition(columnTasks: Task[], overIndex: number, taskId: string): number {
       const GAP = 1000;
       const filtered = columnTasks.filter((t) => t._id !== taskId);
@@ -149,7 +149,7 @@
       return (filtered[overIndex - 1].position + filtered[overIndex].position) / 2;
     }
 
-    // ── DnD ───────────────────────────────────────────────────────────────────
+    
     function handleDragStart({ active }: DragStartEvent) {
       const task = tasks.find((t) => t._id === active.id);
       if (task) setActiveTask(task);
@@ -185,7 +185,7 @@
       const newPosition = computePosition(columnTasks, overIndex, taskId);
       const original = tasks.find((t) => t._id === taskId)!;
 
-      // optimistic
+      
       moveTaskOptimistic(taskId, newStatus, newPosition);
 
       try {
@@ -201,7 +201,7 @@
       }
     }
 
-    // ── rename ────────────────────────────────────────────────────────────────
+   
     function startRename() {
       setRenameValue(board?.name ?? "");
       setIsRenaming(true);
@@ -222,7 +222,7 @@
       setIsRenaming(false);
     }
 
-    // ── task CRUD ─────────────────────────────────────────────────────────────
+    
     const handleSaveTask = useCallback(
       async (data: {
         title: string;
@@ -264,7 +264,7 @@
 
     const members: BoardMember[] = board?.members ?? [];
 
-    // ── guards ────────────────────────────────────────────────────────────────
+   
     if (token === undefined || !token) return null;
 
     if (isLoading) {

@@ -1,4 +1,4 @@
-  // backend/src/tests/tasks.test.ts
+
   import { describe, it, expect, beforeEach } from "vitest";
   import request from "supertest";
   import app from "../app";
@@ -84,13 +84,13 @@
 
       const taskId = create.body._id;
 
-      // First update succeeds — version goes to 1
+      
       await request(app)
         .patch(`/api/tasks/${taskId}`)
         .set("Authorization", `Bearer ${token}`)
         .send({ title: "First edit", baseVersion: 0 });
 
-      // Second update on same field with stale baseVersion — must 409
+      
       const res = await request(app)
         .patch(`/api/tasks/${taskId}`)
         .set("Authorization", `Bearer ${token}`)
@@ -115,7 +115,7 @@
     });
 
     it("viewer cannot create a task", async () => {
-      // Invite a viewer
+     
       const { token: viewerToken } = await registerAndLogin("viewer@test.com");
       await request(app)
         .post(`/api/boards/${boardId}/members`)

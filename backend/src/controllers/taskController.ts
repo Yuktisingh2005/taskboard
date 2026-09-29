@@ -72,7 +72,7 @@ export const updateTask = asyncHandler(async (req: Request, res: Response) => {
 
   const { task, before, changedFields } = await applyTaskUpdate(existing.id, changes, baseVersion);
 
-  // A request that changed nothing shouldn't wake up everyone else's screen.
+  
   if (changedFields.length > 0) {
     emitToBoard(task.boardId, "task:updated", { task });
     await recordTaskUpdate({ userId, task, before, changedFields });
